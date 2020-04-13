@@ -2,6 +2,8 @@
 
 A demo app showing a simple service using flask and some supporting packages
 
+FE (Vue) client [is here](https://github.com/haskone/dummy_connections_fe_client)
+
 ### Requirements
 
  * Docker CE >= 17.04
