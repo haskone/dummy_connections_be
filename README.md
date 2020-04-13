@@ -1,4 +1,4 @@
-# Connections Demo
+# Connections API Demo
 
 A demo app showing a simple service using flask and some supporting packages
 
