@@ -21,6 +21,7 @@ def test_update_connection_status(db, testapp):
         'to_person_id': person_to.id,
         'connection_type': connection_type,
     }
+
     payload = {
         'connection_type': connection_type,
     }

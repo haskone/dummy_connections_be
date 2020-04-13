@@ -37,6 +37,8 @@ def update_connection(data, connection_id):
     connection = Connection.query.get(connection_id)
     connection.connection_type = data.connection_type
     connection.save()
+    # It's arguably whether or not we need to return
+    # result body. But let's keep in consistent
     return ConnectionSchema().jsonify(connection), HTTPStatus.OK
 
 
