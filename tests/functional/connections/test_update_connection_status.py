@@ -4,9 +4,10 @@ from tests.factories import ConnectionFactory, PersonFactory
 
 
 def test_update_connection_status(db, testapp):
-    # See test_get_connections
-    person_from = PersonFactory(id=1000, first_name='Diana')
-    person_to = PersonFactory(id=1001, first_name='Harry')
+    person_from = PersonFactory(first_name='Diana')
+    person_to = PersonFactory(first_name='Harry')
+    db.session.commit()
+
     connection = ConnectionFactory(
         from_person=person_from,
         to_person=person_to,

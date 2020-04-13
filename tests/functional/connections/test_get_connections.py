@@ -4,10 +4,10 @@ from tests.factories import ConnectionFactory, PersonFactory
 
 
 def test_get_connections(db, testapp):
-    # TODO: id is not available after create, so let's specify
-    # it directly. Oh, dirty
-    person_from = PersonFactory(id=100, first_name='Diana')
-    person_to = PersonFactory(id=200, first_name='Harry')
+    person_from = PersonFactory(first_name='Diana')
+    person_to = PersonFactory(first_name='Harry')
+    db.session.commit()
+
     ConnectionFactory(
         from_person=person_from,
         to_person=person_to,
