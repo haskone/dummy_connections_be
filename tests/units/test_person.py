@@ -1,8 +1,6 @@
-import pytest
 from tests.factories import ConnectionFactory, PersonFactory
 
 
-@pytest.mark.xfail
 def test_mutual_friends(db):
     instance = PersonFactory()
     target = PersonFactory()
@@ -12,12 +10,16 @@ def test_mutual_friends(db):
     ConnectionFactory.create_batch(5, to_person=target)
 
     mutual_friends = PersonFactory.create_batch(3)
+    db.session.commit()
+
     for f in mutual_friends:
         ConnectionFactory(from_person=instance, to_person=f, connection_type='friend')
         ConnectionFactory(from_person=target, to_person=f, connection_type='friend')
 
     # mutual connections, but not friends
     decoy = PersonFactory()
+    db.session.commit()
+
     ConnectionFactory(from_person=instance, to_person=decoy, connection_type='coworker')
     ConnectionFactory(from_person=target, to_person=decoy, connection_type='coworker')
 
