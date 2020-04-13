@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import Blueprint
 from webargs.flaskparser import use_args
 
+from connections.models.connection import Connection
 from connections.models.person import Person
 from connections.schemas import ConnectionSchema, PersonSchema
 
@@ -28,3 +29,19 @@ def create_person(person):
 def create_connection(connection):
     connection.save()
     return ConnectionSchema().jsonify(connection), HTTPStatus.CREATED
+
+
+@blueprint.route('/connections/<int:connection_id>', methods=['PUT'])
+@use_args(ConnectionSchema(), locations=('json',))
+def update_connection(data, connection_id):
+    connection = Connection.query.get(connection_id)
+    connection.connection_type = data.connection_type
+    connection.save()
+    return ConnectionSchema().jsonify(connection), HTTPStatus.OK
+
+
+@blueprint.route('/connections', methods=['GET'])
+def get_connections():
+    connection_schema = ConnectionSchema(many=True)
+    connections = Connection.query.all()
+    return connection_schema.jsonify(connections), HTTPStatus.OK

@@ -1,4 +1,4 @@
-from factory import Faker, Sequence, SubFactory
+from factory import Faker, LazyAttribute, Sequence, SubFactory
 from factory.alchemy import SQLAlchemyModelFactory
 
 from connections.database import db
@@ -35,6 +35,9 @@ class ConnectionFactory(BaseFactory):
     from_person = SubFactory(PersonFactory)
     to_person = SubFactory(PersonFactory)
 
-    class Meta:
+    from_person_id = LazyAttribute(lambda o: o.from_person.id)
+    to_person_id = LazyAttribute(lambda o: o.to_person.id)
 
+    class Meta:
+        exclude = ['from_person', 'to_person']
         model = Connection
